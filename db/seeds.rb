@@ -5,3 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+link = Link.create(original_url: 'https://www.linkedin.com/in/vadimstakhnyuk/')
