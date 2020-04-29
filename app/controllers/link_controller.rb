@@ -28,6 +28,12 @@ class LinkController < ApplicationController
         end
     end
 
+    def delete
+        @link = Link.find_by(:short_url => params[:short_url])
+        @link.destroy
+        render json: @link
+    end
+
     def shorten(short_url)
         @link = Link.find_by(:short_url => short_url)
         host = request.host_with_port
