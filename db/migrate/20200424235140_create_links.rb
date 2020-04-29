@@ -3,6 +3,7 @@ class CreateLinks < ActiveRecord::Migration[5.2]
     create_table :links do |t|
       t.string :original_url
       t.string :short_url
+      t.string :result_url
       t.timestamps
     end
   end
