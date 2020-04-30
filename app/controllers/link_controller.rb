@@ -19,19 +19,19 @@ class LinkController < ApplicationController
         @link.clean
         if @link.new_url?
             if @link.save
-                render json: shorten(@link.short_url)
+                render json: { shorten: shorten(@link.short_url), all: Link.all }
             else
                 render 'show'
             end
         else
-            render json: shorten(@link.find_duplicate.short_url)
+            render json: { shorten: shorten(@link.find_duplicate.short_url), all: Link.all }
         end
     end
 
     def delete
         @link = Link.find_by(:short_url => params[:short_url])
         @link.destroy
-        render json: @link
+        render json: { link: @link, all: Link.all }
     end
 
     def shorten(short_url)
