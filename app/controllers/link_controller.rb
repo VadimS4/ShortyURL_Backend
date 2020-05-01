@@ -14,7 +14,6 @@ class LinkController < ApplicationController
     end
 
     def create
-        # @link = Link.create(:original_url => params[:original_url])
         @link = Link.new(url_params)
         @link.clean
         if @link.new_url?
