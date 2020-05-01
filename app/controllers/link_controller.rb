@@ -21,10 +21,10 @@ class LinkController < ApplicationController
             if @link.save
                 render json: { shorten: shorten(@link.short_url), all: Link.all }
             else
-                render 'show'
+                render json: { message: "This is an invalid link." }
             end
         else
-            render json: { shorten: shorten(@link.find_duplicate.short_url), all: Link.all }
+            render json: { shorten: shorten(@link.find_duplicate.short_url), all: Link.all, message: "A short link for this URL already exists!" }
         end
     end
 
