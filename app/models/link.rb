@@ -9,17 +9,13 @@ class Link < ActiveRecord::Base
     def generate_short_url
         random_string =['0'..'9', 'A'..'Z', 'a'..'z'].map{ |range| range.to_a }.flatten
         shorty = 6.times.map { random_string.sample }.join
-
-        #This unique_shorty method generates a random short_url until it is not found in the database, in this case if not found, it returns a false boolean value
-        #this method is just in case the uniqueness validation does not work.
-        unique_shorty = 6.times.map { random_string.sample }.join until Link.find_by(short_url: self.short_url).nil?
         
-        old_url = Link.where(short_url: unique_shorty).last
+        old_url = Link.where(short_url: shorty).last
         
         if old_url.present?
             self.generate_short_url
         else
-            self.short_url = unique_shorty
+            self.short_url = shorty
         end
     end
 

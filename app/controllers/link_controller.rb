@@ -35,6 +35,7 @@ class LinkController < ApplicationController
     def shorten(short_url)
         @link = Link.find_by(:short_url => short_url)
         host = request.host_with_port
+        @original_url = @link.original_url
         @short_url = host + '/' + @link.short_url
     end
 
