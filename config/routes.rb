@@ -6,6 +6,5 @@ Rails.application.routes.draw do
   get 'shorten/:short_url', to: "link#shorten", as: :shorten
   post '/create', to: 'link#create'
   delete '/delete/:short_url', to: "link#delete"
-  # get '/link/fetch_original_url'
 
 end

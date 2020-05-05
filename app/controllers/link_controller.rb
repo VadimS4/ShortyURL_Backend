@@ -5,17 +5,16 @@ class LinkController < ApplicationController
 
     def index
         @link = Link.all
-        render :json => @link.to_json(:only => [:short_url, :result_url])
+        render :json => @link.to_json(:only => [:short_url, :original_url])
     end
     
     def show
         @link = Link.find_by(:short_url => params[:short_url])
-        redirect_to @link.result_url
+        redirect_to @link.original_url
     end
 
     def create
         @link = Link.new(url_params)
-        @link.clean
         if @link.new_url?
             if @link.save
                 render json: { shorten: shorten(@link.short_url), all: Link.all }
@@ -23,7 +22,7 @@ class LinkController < ApplicationController
                 render json: { message: "This is an invalid link." }
             end
         else
-            render json: { shorten: shorten(@link.find_duplicate.short_url), all: Link.all, message: "A short link for this URL already exists!" }
+            render json: { message: "A short link for this URL already exists!" }
         end
     end
 
@@ -36,7 +35,6 @@ class LinkController < ApplicationController
     def shorten(short_url)
         @link = Link.find_by(:short_url => short_url)
         host = request.host_with_port
-        @original_url = @link.result_url
         @short_url = host + '/' + @link.short_url
     end
 
