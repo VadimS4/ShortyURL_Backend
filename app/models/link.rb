@@ -3,7 +3,6 @@ class Link < ActiveRecord::Base
     validates :original_url, presence: true, on: :create
     validates :original_url, format: URI::regexp(%w[http https])
     before_create :generate_short_url
-    validates :generate_short_url, uniqueness: true
 
     #generate a short 6 character code for the short URL
     def generate_short_url
