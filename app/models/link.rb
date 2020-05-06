@@ -11,7 +11,7 @@ class Link < ActiveRecord::Base
         shorty = 6.times.map { random_string.sample }.join
         
         #This method checks to see if there is a short_url in the database already
-        same_short_url = Link.find_by(:short_url => shorty)
+        same_short_url = Link.where(short_url: shorty).last
         
         # If there is a short_url in the database like the one randomly generated, it will generate another short_url
         if same_short_url.present?
