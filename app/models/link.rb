@@ -12,7 +12,7 @@ class Link < ActiveRecord::Base
 
         #This unique_shorty method generates a random short_url until it is not found in the database
         #this method is just in case the uniqueness validation does not work.
-        until Link.find_by(short_url: shorty).nil?
+        if check_for_duplicate_short_url(shorty).nil?
             unique_shorty = shorty
         end
         
@@ -23,6 +23,10 @@ class Link < ActiveRecord::Base
         else
             self.short_url = unique_shorty
         end
+    end
+
+    def check_for_duplicate_short_url(shorty)
+        Link.find_by(:short_url => shorty)
     end
 
     #check to see if there is a duplicate in the database already.
