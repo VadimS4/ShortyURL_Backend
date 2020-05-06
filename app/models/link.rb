@@ -8,9 +8,18 @@ class Link < ActiveRecord::Base
     #generate a short 6 character code for the short URL
     def generate_short_url
         random_string =['0'..'9', 'A'..'Z', 'a'..'z'].map{ |range| range.to_a }.flatten
-        self.short_url = 6.times.map { random_string.sample }.join
+        shorty = 6.times.map { random_string.sample }.join
         
-        self.short_url = 6.times.map { random_string.sample }.join until Link.find_by(:short_url => self.short_url).nil?
+        #This method checks to see if there is a short_url in the database already
+        same_short_url = Link.find_by(:short_url => shorty)
+        
+        # If there is a short_url in the database like the one randomly generated, it will generate another short_url
+        if same_short_url.present?
+            self.generate_short_url
+        else
+            # If not in the database, it sets the new short_url
+            self.short_url = shorty
+        end
     end
 
     #check to see if there is a duplicate in the database already.
